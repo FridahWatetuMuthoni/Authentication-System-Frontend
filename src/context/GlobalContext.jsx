@@ -10,8 +10,9 @@ const GlobalContextProvider = ({ children }) => {
   const [refresh_token, setRefreshToken] = useState(
     localStorage.getItem("refresh_token") || null
   );
-  const [userID, setUserID] = useState();
+  const [userID, setUserID] = useState(null);
   const [mode, setMode] = useState("dark");
+  const [search, setSearch] = useState(null);
 
   const data = {
     userID,
@@ -22,6 +23,8 @@ const GlobalContextProvider = ({ children }) => {
     refresh_token,
     setAccessToken,
     setRefreshToken,
+    search,
+    setSearch,
   };
 
   return (

@@ -44,7 +44,7 @@ function Navbar() {
           </Link>
         </nav>
         <section
-          className="text-2xl mr-3 hover:cursor-pointer"
+          className="text-2xl mr-3 hover:cursor-pointer mt-3 md:mt-0"
           onClick={handleModeChange}
         >
           {mode === "dark" ? <FaSun /> : <MdNightlight />}

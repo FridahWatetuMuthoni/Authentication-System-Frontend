@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getUser, getImages } from "./api";
 
 const useUser = (id) => {
@@ -8,10 +8,11 @@ const useUser = (id) => {
   });
 };
 
-const useImages = () => {
+const useImages = (page, search) => {
   return useQuery({
-    queryKey: ["images"],
-    queryFn: getImages,
+    queryKey: ["images", { page, search }],
+    queryFn: () => getImages(page, search),
+    placeholderData: keepPreviousData,
   });
 };
 
