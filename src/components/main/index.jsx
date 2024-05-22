@@ -5,3 +5,4 @@ export { default as Pagination } from "./Pagination";
 export { default as Search } from "./Search";
 export { default as Images } from "./Images";
 export { default as Image } from "./Image";
+export { default as About } from "./About";

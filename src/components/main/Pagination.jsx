@@ -27,7 +27,7 @@ function Pagination({ setPage, page, total }) {
     "w-full px-4 py-2 border-t border-b text-base text-indigo-500 bg-white hover:bg-gray-100";
 
   return (
-    <section className=" w-1/2 mx-auto mt-3">
+    <section className=" w-full md:w-1/2 mx-auto mt-3">
       <div className="flex items-center py-5">
         <button
           onClick={handlePreviosPage}

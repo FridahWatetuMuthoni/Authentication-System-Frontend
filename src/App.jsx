@@ -1,7 +1,7 @@
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import useGlobalContext from "./hooks/useGlobalContext";
 import { Navbar } from "./components/Utils";
-import { Home, Profile, UpdateProfile } from "./components/main";
+import { Home, Profile, UpdateProfile,About } from "./components/main";
 import {
   Login,
   Logout,
@@ -30,7 +30,8 @@ function App() {
               <Route exact path="/" element={<Home />} />
               <Route path="/logout" element={<Logout />} />
               <Route exact path="/profile" element={<Profile />} />
-              <Route path="/profile/:id" element={<UpdateProfile />} />
+              <Route path="/update/:id" element={<UpdateProfile />} />
+              <Route path="/about" element={<About />} />
             </Route>
           </Routes>
         </BrowserRouter>

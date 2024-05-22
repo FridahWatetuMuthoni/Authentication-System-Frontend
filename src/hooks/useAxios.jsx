@@ -23,8 +23,8 @@ function useAxios() {
       async (error) => {
         const originalRequest = error?.config;
         if (
-          error?.response?.status === 401 &&
-          error?.response?.statusText === "Unauthorized" &&
+          error?.response?.status === 401 ||
+          error?.response?.statusText === "Unauthorized" ||
           !originalRequest?.sent
         ) {
           originalRequest.sent = true;
@@ -43,6 +43,8 @@ function useAxios() {
       axiosInstance.interceptors.response.eject(response_interceptor);
     };
   }, [refresh, access_token]);
+
+  return axiosInstance;
 }
 
 export default useAxios;

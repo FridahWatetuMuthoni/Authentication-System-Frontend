@@ -9,9 +9,11 @@ const useUser = (id) => {
 };
 
 const useImages = (page, search) => {
+  console.log(page);
+  console.log(search);
   return useQuery({
     queryKey: ["images", { page, search }],
-    queryFn: () => getImages(page, search),
+    queryFn: (page, search) => getImages(page, search),
     placeholderData: keepPreviousData,
   });
 };

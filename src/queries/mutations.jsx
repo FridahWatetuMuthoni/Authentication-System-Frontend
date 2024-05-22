@@ -21,21 +21,19 @@ const useLogin = () => {
 };
 
 const useLogout = () => {
-  // useAxios();
+  const axiosCall = useAxios();
   return useMutation({
-    mutationFn: (refresh_token) => logoutUser(refresh_token),
+    mutationFn: (refresh_token) => logoutUser(refresh_token, axiosCall),
   });
 };
 
 const useAccessToken = () => {
-  // useAxios();
   return useMutation({
     mutationFn: (refresh_token) => getNewAccesToken(refresh_token),
   });
 };
 
 const useUpdateUser = () => {
-  // useAxios();
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (user) => updateUser(user),

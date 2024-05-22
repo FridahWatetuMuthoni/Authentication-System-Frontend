@@ -2,7 +2,7 @@ import { useState } from "react";
 import useGlobalContext from "../../hooks/useGlobalContext";
 
 function Search() {
-  const { setSearch } = useGlobalContext();
+  const { setSearch, setPage } = useGlobalContext();
   const [q, setQ] = useState("");
 
   const handleChange = (e) => {
@@ -12,6 +12,7 @@ function Search() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSearch(q);
+    setPage(1);
   };
 
   return (

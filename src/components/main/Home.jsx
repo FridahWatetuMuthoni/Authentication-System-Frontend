@@ -1,17 +1,38 @@
-import { useState } from "react";
 import useGlobalContext from "../../hooks/useGlobalContext";
-import { useImages } from "../../queries/queries";
 import { Pagination, Search, Image } from "./";
 import { Loading, Error } from "../Utils";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 function Home() {
-  const [page, setPage] = useState(1);
-  const { search } = useGlobalContext();
+  const { search, page, setPage } = useGlobalContext();
+  const API_KEY = import.meta.env.VITE_API_KEY;
   let totalPages = 1;
   let results = [];
-  console.log(search);
 
-  const { error, isPending, data } = useImages(page, search);
+  const { error, isPending, data } = useQuery({
+    queryKey: ["images", page, search],
+    queryFn: async () => {
+      let url;
+      const all_photos = `https://api.unsplash.com/photos?&per_page=12`;
+      const search_photos = `https://api.unsplash.com/search/photos?page=${page}&query=${search}&per_page=12`;
+      if (search === null) {
+        url = all_photos;
+      } else {
+        url = search_photos;
+      }
+      console.log(page);
+      console.log(search);
+      console.log(url);
+      const response = await axios.get(url, {
+        headers: {
+          "Accept-Version": "v1",
+          Authorization: `Client-ID ${API_KEY}`,
+        },
+      });
+      return response;
+    },
+  });
 
   if (isPending) {
     return <Loading />;
@@ -31,19 +52,23 @@ function Home() {
         }
         return acc;
       }, {});
-      console.log(links);
       const last_str = links.last;
       const last_page = last_str.split("?")[1].split("=")[1];
       totalPages = parseInt(last_page);
     }
   }
 
-  if (search) {
-    results = data?.data?.results;
+  if (search === null) {
+    const available = data?.data?.results?.length > 0 ? true : false;
+    if (available) {
+      results = data?.data.results;
+    } else {
+      results = data?.data;
+    }
   } else {
     results = data?.data?.results;
   }
-
+  console.log(data);
   console.log(results);
 
   return (
@@ -64,14 +89,14 @@ function Home() {
                   A gallery of the best quality images.
                 </p>
               </div>
-              <section className="flex w-11/12 md:w-8/12 xl:w-6/12">
+              <section className="flex w-11/12 md:w-8/12 xl:w-6/12 mb-3">
                 <Search />
               </section>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-wrap -m-4">
+        <div className="flex flex-wrap -m-4 item-center justify-center ">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
             {results.map((image) => (
               <Image key={image.id} image={image} />
