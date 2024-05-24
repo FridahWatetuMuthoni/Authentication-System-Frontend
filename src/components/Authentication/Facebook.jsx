@@ -29,9 +29,7 @@ function Facebook() {
   });
 
   const handleSuccess = (response) => {
-    console.log(response);
-    console.log(response.data);
-    const access = response?.accessToken;
+    const access = response?.data?.accessToken;
     if (access) {
       const payload = {
         access_token: access,

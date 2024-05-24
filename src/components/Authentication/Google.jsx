@@ -15,7 +15,6 @@ function Google() {
     mutationFn: async (payload) => {
       const response = await axiosInstance.post("google/", payload);
       if (response.status === 200) {
-        console.log(response);
         setRefreshToken(response?.data?.refresh);
         setAccessToken(response?.data?.access);
         localStorage.setItem("access_token", response?.data?.access);

@@ -20,7 +20,6 @@ function Login() {
     mutationFn: async (user) => {
       const response = await axiosInstance.post("login/", user);
       if (response.status === 200) {
-        console.log(response);
         setRefreshToken(response?.data?.refresh);
         setAccessToken(response?.data?.access);
         localStorage.setItem("access_token", response?.data?.access);

@@ -21,9 +21,6 @@ function Home() {
       } else {
         url = search_photos;
       }
-      console.log(page);
-      console.log(search);
-      console.log(url);
       const response = await axios.get(url, {
         headers: {
           "Accept-Version": "v1",
@@ -68,8 +65,6 @@ function Home() {
   } else {
     results = data?.data?.results;
   }
-  console.log(data);
-  console.log(results);
 
   return (
     <section className=" body-font">
