@@ -26,8 +26,8 @@ const useRefreshToken = () => {
           console.log(error);
         }
       } else {
-        // localStorage.removeItem("refresh_token");
-        // localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        localStorage.removeItem("access_token");
       }
     }
   };
