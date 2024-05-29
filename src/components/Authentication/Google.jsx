@@ -4,6 +4,7 @@ import useGlobalContext from "../../hooks/useGlobalContext";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
+import { googleRegister } from "../../queries/api";
 
 function Google() {
   const clientID =
@@ -12,18 +13,17 @@ function Google() {
   const { setAccessToken, setRefreshToken, setUserID } = useGlobalContext();
 
   const mutation = useMutation({
-    mutationFn: async (payload) => {
-      const response = await axiosInstance.post("google/", payload);
-      if (response.status === 200) {
-        setRefreshToken(response?.data?.refresh);
-        setAccessToken(response?.data?.access);
-        localStorage.setItem("access_token", response?.data?.access);
-        localStorage.setItem("refresh_token", response?.data?.refresh);
-        localStorage.setItem("userID", response?.data.user.pk);
-        setUserID(response?.data.user.pk);
-        navigate("/");
-      }
-      return response;
+    mutationFn: (payload) => googleRegister(payload),
+    onSuccess: ({ data, variables, context }) => {
+      console.log(`${context}--${variables}`);
+      console.log(data);
+      setRefreshToken(data?.refresh);
+      setAccessToken(data?.access);
+      localStorage.setItem("access_token", data?.access);
+      localStorage.setItem("refresh_token", data?.refresh);
+      localStorage.setItem("userID", data.user.pk);
+      setUserID(data.user.pk);
+      navigate("/");
     },
   });
 

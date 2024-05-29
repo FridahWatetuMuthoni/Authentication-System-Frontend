@@ -1,42 +1,29 @@
-import axiosInstance from "../api/axiosInstance";
+import axios from "axios";
 
-//Require Access Token
-const getUser = async (id) => {
-  const response = await axiosInstance.get(`user/${id}/`);
-  return response.data;
-};
-
-const updateUser = async (user) => {
-  const response = await axiosInstance.put(`user/${user.id}`, user);
-  return response.data;
-};
-
-const logoutUser = async (refresh_token, axiosCall) => {
-  const response = await axiosCall.post("logout", refresh_token);
-  return response.data;
-};
-
-const getNewAccesToken = async (refresh_token) => {
-  const response = await axiosInstance.post("refresh/", refresh_token);
-  return response.data;
-};
+const BASE_URL = "https://social-authentication-system-backend.onrender.com/";
+const axios_instance = axios.create({
+  baseURL: BASE_URL,
+});
 
 //Dont Require Access Token
 const registerUser = async (user) => {
-  const response = await axiosInstance.post("register/", user);
+  const response = await axios_instance.post("users/register/", user);
+  return response.data;
+};
+
+const googleRegister = async (payload) => {
+  const response = await axios_instance.post("users/google/", payload);
+  return response.data;
+};
+
+const facebookRegister = async (payload) => {
+  const response = await axios_instance.post("users/facebook/", payload);
   return response.data;
 };
 
 const loginUser = async (user) => {
-  const response = await axiosInstance.post("login/", user);
+  const response = await axios_instance.post("users/login/", user);
   return response.data;
 };
 
-export {
-  getUser,
-  registerUser,
-  loginUser,
-  logoutUser,
-  getNewAccesToken,
-  updateUser,
-};
+export { registerUser, googleRegister, facebookRegister, loginUser };

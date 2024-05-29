@@ -6,6 +6,7 @@ import Facebook from "./Facebook";
 import axiosInstance from "../../api/axiosInstance";
 import { useMutation } from "@tanstack/react-query";
 import { jwtDecode } from "jwt-decode";
+import { loginUser } from "../../queries/api";
 
 function Login() {
   const { setAccessToken, setRefreshToken, setUserID } = useGlobalContext();
@@ -17,20 +18,18 @@ function Login() {
   });
 
   const mutation = useMutation({
-    mutationFn: async (user) => {
-      const response = await axiosInstance.post("login/", user);
-      if (response.status === 200) {
-        setRefreshToken(response?.data?.refresh);
-        setAccessToken(response?.data?.access);
-        localStorage.setItem("access_token", response?.data?.access);
-        localStorage.setItem("refresh_token", response?.data?.refresh);
-        const decoded_data = jwtDecode(response?.data?.access);
-        localStorage.setItem("userID", decoded_data.user_id);
-        setUserID(decoded_data.user_id);
+    mutationFn: (user) => loginUser(user),
+    onSuccess: ({ data, variables, context }) => {
+      console.log(`${context}--${variables}`);
+      setRefreshToken(data?.refresh);
+      setAccessToken(data?.access);
+      localStorage.setItem("access_token", data?.access);
+      localStorage.setItem("refresh_token", data?.refresh);
+      const decoded_data = jwtDecode(data?.access);
+      localStorage.setItem("userID", decoded_data.user_id);
+      setUserID(decoded_data.user_id);
 
-        navigate("/");
-      }
-      return response;
+      navigate("/");
     },
   });
 
