@@ -29,7 +29,6 @@ function useAxios() {
         ) {
           originalRequest.sent = true;
           const new_access_token = await refresh();
-          console.log(new_access_token);
           originalRequest.headers["Authorization"] = `JWT ${new_access_token}`;
           return axiosInstance(originalRequest);
         }
