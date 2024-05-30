@@ -7,7 +7,6 @@ const useRefreshToken = () => {
     const refresh_token = localStorage.getItem("refresh_token");
 
     if (refresh_token) {
-      console.log(`useRefresh hook-in if statement------>${refresh_token}`);
       const tokenParts = JSON.parse(atob(refresh_token.split(".")[1]));
 
       // expiry date in token is expressed in seconds, while now() returns in miliseconds
@@ -15,19 +14,23 @@ const useRefreshToken = () => {
 
       if (tokenParts.exp > now) {
         try {
-          const response = await axiosInstance.post("refresh/", {
+          const response = await axiosInstance.post("users/refresh/", {
             refresh: refresh_token,
           });
-          console.log(response?.data);
           localStorage.setItem("access_token", response?.data?.access);
           setAccessToken(response?.data?.access);
           return response?.data?.access;
         } catch (error) {
           console.log(error);
+
+          localStorage.removeItem("refresh_token");
+          localStorage.removeItem("access_token");
+          setAccessToken(null);
         }
       } else {
         localStorage.removeItem("refresh_token");
         localStorage.removeItem("access_token");
+        setAccessToken(null);
       }
     }
   };
