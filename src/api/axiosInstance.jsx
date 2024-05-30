@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL =
-  "https://social-authentication-system-backend.onrender.com/users/";
+  "https://authentication-system-y5nj.onrender.com/users/";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,

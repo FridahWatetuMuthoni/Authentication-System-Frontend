@@ -6,7 +6,6 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { facebookRegister } from "../../queries/api";
 
-
 function Facebook() {
   const appId = "304717439171510";
   const navigate = useNavigate();
@@ -14,8 +13,7 @@ function Facebook() {
 
   const mutation = useMutation({
     mutationFn: (payload) => facebookRegister(payload),
-    onSuccess: ({ data, variables, context }) => {
-      console.log(`${context}--${variables}`);
+    onSuccess: (data) => {
       setRefreshToken(data?.refresh);
       setAccessToken(data?.access);
       localStorage.setItem("access_token", data?.access);
