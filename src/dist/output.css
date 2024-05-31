@@ -833,10 +833,6 @@ main[data-theme="dark"] {
   width: 91.666667%;
 }
 
-.w-28{
-  width: 7rem;
-}
-
 .w-3{
   width: 0.75rem;
 }
@@ -1719,6 +1715,11 @@ main[data-theme="dark"] {
     margin-right: auto;
   }
 
+  .md\:mx-3{
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+  }
+
   .md\:mb-0{
     margin-bottom: 0px;
   }
@@ -1755,16 +1756,20 @@ main[data-theme="dark"] {
     width: 8rem;
   }
 
-  .md\:w-36{
-    width: 9rem;
-  }
-
   .md\:w-5{
     width: 1.25rem;
   }
 
   .md\:w-8\/12{
     width: 66.666667%;
+  }
+
+  .md\:w-11\/12{
+    width: 91.666667%;
+  }
+
+  .md\:w-10\/12{
+    width: 83.333333%;
   }
 
   .md\:max-w-lg{
