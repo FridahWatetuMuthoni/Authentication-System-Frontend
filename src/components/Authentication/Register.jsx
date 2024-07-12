@@ -277,7 +277,6 @@ function Register() {
           </section>
           <section className="flex flex-col md:flex-row items-center gap-2 w-full md:justify-around px-1">
             <Google setLoading={setLoading}/>
-            <Facebook />
           </section>
           <section className="flex flex-col md:flex-row items-center text-sm mt-6 justify-between gap-2 md:gap-2 ml-2">
             <section className="flex items-center">
