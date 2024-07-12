@@ -10,6 +10,7 @@ import Loading from '../Utils/Loading'
 
 function Login() {
   const { setAccessToken, setRefreshToken, setUserID } = useGlobalContext();
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({
@@ -20,6 +21,7 @@ function Login() {
   const mutation = useMutation({
     mutationFn: (user) => loginUser(user),
     onSuccess: (data) => {
+      setLoading(false)
       setRefreshToken(data?.refresh);
       setAccessToken(data?.access);
       localStorage.setItem("access_token", data?.access);
@@ -47,7 +49,7 @@ function Login() {
   };
 
   if(mutation.isPending){
-    return <Loading/>
+    setLoading(true)
   }
 
   return (
@@ -160,7 +162,7 @@ function Login() {
               <hr className="w:26 md:w-32" />
             </section>
             <section className=" flex flex-col md:flex-row items-center justify-center gap-2 w-full md:justify-around">
-              <Google />
+              <Google setLoading = {setLoading} />
               <Facebook />
             </section>
           </form>

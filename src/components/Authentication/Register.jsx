@@ -276,7 +276,7 @@ function Register() {
             <hr className="w:26 md:w-32" />
           </section>
           <section className="flex flex-col md:flex-row items-center gap-2 w-full md:justify-around px-1">
-            <Google />
+            <Google setLoading={setLoading}/>
             <Facebook />
           </section>
           <section className="flex flex-col md:flex-row items-center text-sm mt-6 justify-between gap-2 md:gap-2 ml-2">
