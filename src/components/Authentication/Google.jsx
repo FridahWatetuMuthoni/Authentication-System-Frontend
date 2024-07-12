@@ -4,6 +4,7 @@ import useGlobalContext from "../../hooks/useGlobalContext";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { googleRegister } from "../../queries/api";
+import Loading from "../Utils/Loading";
 
 function Google() {
   const clientID =
@@ -14,6 +15,7 @@ function Google() {
   const mutation = useMutation({
     mutationFn: (payload) => googleRegister(payload),
     onSuccess: (data) => {
+      console.log('data returned')
       setRefreshToken(data?.refresh);
       setAccessToken(data?.access);
       localStorage.setItem("access_token", data?.access);
@@ -29,6 +31,7 @@ function Google() {
   };
   const handleSuccess = (response) => {
     const access = response?.data?.access_token;
+    console.log('google passed')
     if (access) {
       const payload = {
         access_token: access,
@@ -36,6 +39,11 @@ function Google() {
       mutation.mutateAsync(payload);
     }
   };
+
+  if(mutation.isPending){
+    return <Loading/>
+  }
+
   return (
     <div className="w-full">
       <LoginSocialGoogle

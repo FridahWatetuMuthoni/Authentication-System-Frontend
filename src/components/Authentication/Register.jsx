@@ -6,6 +6,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRegister } from "../../queries/mutations";
 import useGlobalContext from "../../hooks/useGlobalContext";
+import { useState } from "react";
+import Loading from "../Utils/Loading";
 
 const schema = z
   .object({
@@ -34,6 +36,7 @@ const schema = z
 function Register() {
   const navigate = useNavigate();
   const registerUser = useRegister();
+  const [loading, setLoading] = useState(false)
   const { setAccessToken, setRefreshToken, setUserID } = useGlobalContext();
   const {
     register,
@@ -52,6 +55,7 @@ function Register() {
   });
 
   const onSubmit = async (data) => {
+    setLoading(true)
     try {
       const response = await registerUser.mutateAsync(data);
       setAccessToken(response.access);
@@ -60,11 +64,16 @@ function Register() {
       localStorage.setItem("refresh_token", response.refresh);
       localStorage.setItem("userID", response.user.pk);
       setUserID(response.user.pk);
+      setLoading(false)
       navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
+
+  if(loading){
+    return <Loading/>
+  }
 
   return (
     <section className="h-full">

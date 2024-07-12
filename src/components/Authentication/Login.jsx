@@ -6,6 +6,7 @@ import Facebook from "./Facebook";
 import { useMutation } from "@tanstack/react-query";
 import { jwtDecode } from "jwt-decode";
 import { loginUser } from "../../queries/api";
+import Loading from '../Utils/Loading'
 
 function Login() {
   const { setAccessToken, setRefreshToken, setUserID } = useGlobalContext();
@@ -44,6 +45,10 @@ function Login() {
       mutation.mutateAsync(user);
     }
   };
+
+  if(mutation.isPending){
+    return <Loading/>
+  }
 
   return (
     <section className="h-full">
