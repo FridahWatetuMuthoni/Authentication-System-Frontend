@@ -44,12 +44,14 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (user.email.trim() && user.password.trim()) {
+      setLoading(true)
       mutation.mutateAsync(user);
     }
   };
 
-  if(mutation.isPending){
-    setLoading(true)
+  
+  if(loading){
+    return <Loading/>
   }
 
   return (
